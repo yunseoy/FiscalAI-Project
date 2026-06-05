@@ -1,0 +1,24 @@
+.env*# secrets
+.env
+
+# python cache
+__pycache__/
+*.pyc
+
+# build artifacts
+build/
+dist/
+*.exe
+*.spec
+
+# logs
+logs/
+*.log
+
+# virtualenv
+.venv/
+venv/
+bin/
+.python-version
+.cursor/
+output/*

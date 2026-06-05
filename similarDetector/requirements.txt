@@ -1,0 +1,7 @@
+# aiDetector.py / collect_data.py / embed_projects.py — 재정사업 유사·중복 탐지
+# Python 3.11 권장
+
+streamlit>=1.32.2,<2
+python-dotenv>=1.0.1,<2
+openai>=1.34,<2
+supabase>=2.0.0,<3
