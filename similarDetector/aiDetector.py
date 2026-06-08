@@ -40,7 +40,6 @@ FIELD_OPTIONS = [
     "통일·외교", "환경", "기타",
 ]
 
-# ── 색상 시스템 (정부 UI/UX 가이드라인 기반) ──────────────────────────────────
 PRIMARY       = "#0062B1"
 PRIMARY_DARK  = "#004A8C"
 PRIMARY_LIGHT = "#E8F0FA"
@@ -255,7 +254,7 @@ def _inject_global_styles() -> None:
   }}
   .stApp {{ background-color: {GRAY_50} !important; color-scheme: light; }}
 
-  /* GNB */
+  /* ── GNB ── */
   .krds-gnb {{
     background: {PRIMARY}; height: 40px; display: flex; align-items: center;
     justify-content: flex-end; padding: 0 2rem; margin: 0;
@@ -263,7 +262,7 @@ def _inject_global_styles() -> None:
   .krds-gnb a {{ color: rgba(255,255,255,0.9); font-size: 0.8rem; text-decoration: none; }}
   .krds-gnb a:hover {{ color: #fff; text-decoration: underline; }}
 
-  /* 헤더 */
+  /* ── 헤더 ── */
   .krds-header {{
     background: {WHITE}; border-bottom: 3px solid {PRIMARY};
     padding: 1.25rem 2rem; display: flex; align-items: center;
@@ -271,7 +270,7 @@ def _inject_global_styles() -> None:
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }}
   .krds-header-left {{ display: flex; align-items: center; gap: 1rem; }}
-  .krds-logo-wrap img {{ height: 40px; width: auto; }}
+  .krds-logo-wrap img {{ height: 56px; width: auto; }}
   .krds-title-wrap h1 {{
     margin: 0; font-size: 1.375rem; font-weight: 700;
     color: {PRIMARY}; letter-spacing: -0.02em; line-height: 1.3;
@@ -283,77 +282,96 @@ def _inject_global_styles() -> None:
     font-size: 0.8125rem; color: {PRIMARY}; font-weight: 600; white-space: nowrap;
   }}
 
-  /* 브레드크럼 */
+  /* ── 브레드크럼 ── */
   .krds-breadcrumb {{
     background: {GRAY_100}; border-bottom: 1px solid {GRAY_200};
     padding: 0.6rem 2rem; font-size: 0.8125rem; color: {GRAY_600};
-    display: flex; align-items: center; gap: 0.4rem; margin: 0;
+    display: flex; align-items: center; justify-content: space-between; margin: 0;
   }}
+  .krds-breadcrumb-left {{ display: flex; align-items: center; gap: 0.4rem; }}
   .krds-breadcrumb strong {{ color: {PRIMARY}; font-weight: 600; }}
+  .krds-back-btn {{
+    font-size: 0.8125rem; color: {PRIMARY}; font-weight: 600;
+    text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
+    padding: 0.2rem 0.65rem; border: 1px solid {PRIMARY};
+    border-radius: 4px; background: {WHITE};
+    transition: background 0.15s;
+  }}
+  .krds-back-btn:hover {{ background: {PRIMARY_LIGHT}; }}
 
-  /* 콘텐츠 */
+  /* ── 콘텐츠 영역 ── */
   .main .block-container {{
-    padding: 1.5rem 2rem 3rem !important;
-    max-width: 1100px !important; margin: 0 auto !important;
+    padding: 2rem 4rem 3rem !important;
+    max-width: 960px !important;
+    margin: 0 auto !important;
+    }}
+    .stTextArea small,
+    [data-testid="InputInstructions"] {{
+        display: none !important;
+    }}
+
+  /* ── 입력 페이지 레이아웃 ── */
+  .krds-input-hero {{
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid {GRAY_200};
+  }}
+  .krds-input-hero h2 {{
+    font-size: 1.5rem; font-weight: 700; color: {GRAY_900};
+    margin: 0 0 0.5rem; letter-spacing: -0.02em;
+  }}
+  .krds-input-hero p {{
+    font-size: 0.9375rem; color: {GRAY_600}; margin: 0;
   }}
 
-  /* 메인 패널 */
-  .st-key-govt-content-panel {{ max-width: 860px; margin: 0 auto !important; width: 100% !important; }}
-  .st-key-govt-content-panel,
-  .st-key-govt-content-panel [data-testid="stVerticalBlockBorderWrapper"],
-  .st-key-govt-content-panel > div {{
-    background: {WHITE} !important; border: 1px solid {GRAY_200} !important;
-    border-radius: 8px !important; box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
-    padding: 2rem !important;
+  /* ── 입력 그리드 ── */
+  .krds-form-grid {{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
   }}
-  .st-key-govt-content-panel [data-testid="stVerticalBlock"],
-  .st-key-govt-content-panel [data-testid="stVerticalBlock"] > div {{
-    background: transparent !important; border: none !important;
-    box-shadow: none !important; padding: 0 !important;
-  }}
+  .krds-form-full {{ grid-column: 1 / -1; }}
 
-  /* 섹션 타이틀 */
-  .krds-section-title {{
-    display: flex; align-items: center; gap: 0.6rem;
-    margin: 0 0 1.25rem; padding-bottom: 0.75rem; border-bottom: 2px solid {GRAY_200};
+  /* ── 라벨 ── */
+  .krds-label {{
+    display: block; font-size: 0.875rem; font-weight: 600;
+    color: {GRAY_900}; margin: 0 0 0.4rem;
   }}
-  .krds-section-title .bar {{ width: 4px; height: 1.2rem; background: {PRIMARY}; border-radius: 2px; }}
-  .krds-section-title span {{ font-size: 1.125rem; font-weight: 700; color: {GRAY_900}; }}
-
-  /* 라벨 */
-  .krds-label {{ display: block; font-size: 0.875rem; font-weight: 600; color: {GRAY_900}; margin: 0 0 0.35rem; }}
   .krds-label .req {{ color: #C53030; margin-left: 2px; }}
 
-  /* 폼 */
-  .st-key-govt-content-panel div[data-testid="stForm"] {{
+  /* ── 폼 입력창 ── */
+  div[data-testid="stForm"] {{
     background: transparent !important; border: none !important;
     box-shadow: none !important; padding: 0 !important; margin-top: 0 !important;
   }}
-  .st-key-govt-content-panel div[data-testid="stForm"] input,
-  .st-key-govt-content-panel div[data-testid="stForm"] textarea,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="input"] input,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="textarea"] textarea,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="input"] > div,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="textarea"] > div,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="select"] > div {{
+  div[data-testid="stForm"] input,
+  div[data-testid="stForm"] textarea,
+  div[data-testid="stForm"] [data-baseweb="input"] input,
+  div[data-testid="stForm"] [data-baseweb="textarea"] textarea,
+  div[data-testid="stForm"] [data-baseweb="input"] > div,
+  div[data-testid="stForm"] [data-baseweb="textarea"] > div,
+  div[data-testid="stForm"] [data-baseweb="select"] > div {{
     background-color: {WHITE} !important; color: {GRAY_900} !important;
     -webkit-text-fill-color: {GRAY_900} !important;
-    border: 1px solid {GRAY_200} !important; border-radius: 6px !important; color-scheme: light !important;
+    border: 1px solid {GRAY_200} !important; border-radius: 6px !important;
+    color-scheme: light !important;
   }}
-  .st-key-govt-content-panel div[data-testid="stForm"] input::placeholder,
-  .st-key-govt-content-panel div[data-testid="stForm"] textarea::placeholder {{
+  div[data-testid="stForm"] input::placeholder,
+  div[data-testid="stForm"] textarea::placeholder {{
     color: {GRAY_400} !important; -webkit-text-fill-color: {GRAY_400} !important; opacity: 1 !important;
   }}
-  .st-key-govt-content-panel div[data-testid="stForm"] input:focus,
-  .st-key-govt-content-panel div[data-testid="stForm"] textarea:focus,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="input"]:focus-within > div,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="textarea"]:focus-within > div,
-  .st-key-govt-content-panel div[data-testid="stForm"] [data-baseweb="select"]:focus-within > div {{
+  div[data-testid="stForm"] input:focus,
+  div[data-testid="stForm"] textarea:focus,
+  div[data-testid="stForm"] [data-baseweb="input"]:focus-within > div,
+  div[data-testid="stForm"] [data-baseweb="textarea"]:focus-within > div,
+  div[data-testid="stForm"] [data-baseweb="select"]:focus-within > div {{
     border: 2px solid {PRIMARY} !important;
     box-shadow: 0 0 0 3px {PRIMARY_LIGHT} !important; outline: none !important;
   }}
 
-  /* 버튼 */
+  /* ── 버튼 ── */
   .stApp .main button,
   .stApp .main [data-testid="stFormSubmitButton"] button,
   .stApp .main [data-testid="stBaseButton-primary"],
@@ -361,7 +379,6 @@ def _inject_global_styles() -> None:
   .stApp .main div.stButton > button,
   .stApp .main .stFormSubmitButton button,
   .stApp .main [data-testid="stDownloadButton"] button,
-  .stApp .st-key-btn_go_back button,
   .stApp .st-key-btn_copy_text button,
   .stApp .st-key-btn_download_text button {{
     background-color: {PRIMARY} !important; background: {PRIMARY} !important;
@@ -377,84 +394,122 @@ def _inject_global_styles() -> None:
   }}
   .stApp .main button:disabled {{ opacity: 0.5 !important; }}
   .stApp .main [data-testid="stFormSubmitButton"] button {{
-    width: 100% !important; min-height: 48px !important;
+    width: 100% !important; min-height: 52px !important;
     font-size: 1rem !important; font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
   }}
   .stApp [data-testid="stFormSubmitButton"] > button,
   .stApp [data-testid="stForm"] .stFormSubmitButton > button {{
     background-color: {PRIMARY} !important; color: {WHITE} !important; border-color: {PRIMARY} !important;
   }}
 
-  /* 결과 카드 */
-  .krds-card {{
-    background: {WHITE}; border: 1px solid {GRAY_200}; border-radius: 8px;
-    padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+  /* ── 결과 섹션 헤딩 ── */
+  .krds-section-heading {{
+    font-size: 1rem; font-weight: 700; color: {GRAY_900};
+    margin: 0 0 0.85rem; padding-bottom: 0.5rem;
+    border-bottom: 2px solid {PRIMARY};
+    display: flex; align-items: center; gap: 0.5rem;
+  }}
+
+  /* ── 분석대상 요약 카드 ── */
+  .krds-summary {{
+    background: {WHITE}; border: 1px solid {GRAY_200};
+    border-left: 4px solid {PRIMARY}; border-radius: 8px;
+    padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }}
-  .krds-card-header {{ display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.5rem; }}
-  .krds-card-title {{ font-size: 1rem; font-weight: 700; color: {GRAY_900}; line-height: 1.4; }}
-  .krds-risk-badge {{ padding: 0.25rem 0.65rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; flex-shrink: 0; }}
-  .krds-meta {{ font-size: 0.8125rem; color: {GRAY_600}; margin: 0.25rem 0; line-height: 1.5; }}
-  .krds-meta a {{ color: {PRIMARY}; text-decoration: none; }}
-  .krds-path {{ font-size: 0.8rem; color: {GRAY_400}; margin: 0.2rem 0 0.5rem; }}
 
-  /* 유사도 바 */
-  .krds-bar-wrap {{ margin: 0.85rem 0 1rem; }}
-  .krds-bar-label {{ display: flex; justify-content: space-between; font-size: 0.8125rem; color: {GRAY_600}; margin-bottom: 0.4rem; font-weight: 500; }}
-  .krds-bar-label strong {{ color: {PRIMARY}; font-weight: 700; }}
-  .krds-bar-track {{ height: 8px; background: {GRAY_100}; border-radius: 4px; overflow: hidden; }}
-  .krds-bar-fill {{ height: 100%; background: linear-gradient(90deg, {PRIMARY} 0%, #3B82F6 100%); border-radius: 4px; }}
-
-  /* 비교 컬럼 */
-  .krds-compare {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }}
-  @media (max-width: 640px) {{ .krds-compare {{ grid-template-columns: 1fr; }} }}
-  .krds-compare-box {{ background: {GRAY_50}; border: 1px solid {GRAY_200}; border-radius: 6px; padding: 0.85rem 1rem; }}
-  .krds-compare-box h4 {{ margin: 0 0 0.4rem; font-size: 0.8125rem; font-weight: 700; color: {PRIMARY}; }}
-  .krds-compare-box p {{ margin: 0; font-size: 0.875rem; color: {GRAY_600}; line-height: 1.6; }}
-
-  /* 검토의견 */
-  .krds-review-box {{
-    background: #FFFBF0; border: 1px solid #F6AD55; border-left: 4px solid #DD6B20;
-    border-radius: 6px; padding: 0.85rem 1rem; margin-top: 0.85rem;
-    font-size: 0.875rem; color: #744210; line-height: 1.7;
+  /* ── 벡터+의견 카드 ── */
+  .krds-result-section {{
+    background: {WHITE}; border: 1px solid {GRAY_200};
+    border-radius: 8px; padding: 1.5rem;
+    margin-bottom: 1.5rem; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
   }}
-  .krds-review-box strong {{ color: #C05621; display: block; margin-bottom: 0.3rem; font-size: 0.8125rem; }}
 
-  /* 벡터 검색 결과 */
+  /* ── 벡터 행 ── */
   .krds-vector-row {{
     display: flex; justify-content: space-between; align-items: center;
-    padding: 0.6rem 0; border-bottom: 1px solid {GRAY_100}; font-size: 0.875rem; color: {GRAY_600};
+    padding: 0.6rem 0; border-bottom: 1px solid {GRAY_100};
+    font-size: 0.875rem; color: {GRAY_600};
   }}
   .krds-vector-row:last-child {{ border-bottom: none; }}
   .krds-vector-score {{
     color: {PRIMARY}; font-weight: 700; font-size: 0.875rem;
-    background: {PRIMARY_LIGHT}; padding: 0.15rem 0.55rem; border-radius: 12px; white-space: nowrap;
+    background: {PRIMARY_LIGHT}; padding: 0.15rem 0.55rem;
+    border-radius: 12px; white-space: nowrap;
   }}
 
-  /* 섹션 헤딩 */
-  .krds-section-heading {{
-    font-size: 1rem; font-weight: 700; color: {GRAY_900};
-    margin: 1.5rem 0 0.85rem; padding-bottom: 0.5rem;
-    border-bottom: 1px solid {GRAY_200}; display: flex; align-items: center; gap: 0.5rem;
-  }}
-
-  /* 종합 의견 */
+  /* ── 종합 의견 ── */
   .krds-opinion-box {{
-    background: {PRIMARY_LIGHT}; border: 1px solid #C3D9F5; border-left: 4px solid {PRIMARY};
-    border-radius: 6px; padding: 1rem 1.25rem; font-size: 0.9375rem;
-    color: {GRAY_900}; line-height: 1.75; display: flex; gap: 0.75rem; align-items: flex-start;
+    background: {PRIMARY_LIGHT}; border: 1px solid #C3D9F5;
+    border-left: 4px solid {PRIMARY}; border-radius: 6px;
+    padding: 1rem 1.25rem; font-size: 0.9375rem;
+    color: {GRAY_900}; line-height: 1.75;
+    display: flex; gap: 0.75rem; align-items: flex-start;
+    margin-top: 1rem;
   }}
 
-  /* 분석중 */
+  /* ── 결과 카드 ── */
+  .krds-card {{
+    background: {WHITE}; border: 1px solid {GRAY_200};
+    border-radius: 8px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }}
+  .krds-card-header {{
+    display: flex; justify-content: space-between;
+    align-items: flex-start; gap: 0.75rem; margin-bottom: 0.5rem;
+  }}
+  .krds-card-title {{ font-size: 1rem; font-weight: 700; color: {GRAY_900}; line-height: 1.4; }}
+  .krds-risk-badge {{
+    padding: 0.25rem 0.65rem; border-radius: 4px;
+    font-size: 0.75rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  }}
+  .krds-meta {{ font-size: 0.8125rem; color: {GRAY_600}; margin: 0.25rem 0; line-height: 1.5; }}
+  .krds-meta a {{ color: {PRIMARY}; text-decoration: none; }}
+  .krds-path {{ font-size: 0.8rem; color: {GRAY_400}; margin: 0.2rem 0 0.5rem; }}
+
+  /* ── 유사도 바 ── */
+  .krds-bar-wrap {{ margin: 0.85rem 0 1rem; }}
+  .krds-bar-label {{
+    display: flex; justify-content: space-between;
+    font-size: 0.8125rem; color: {GRAY_600}; margin-bottom: 0.4rem; font-weight: 500;
+  }}
+  .krds-bar-label strong {{ color: {PRIMARY}; font-weight: 700; }}
+  .krds-bar-track {{ height: 8px; background: {GRAY_100}; border-radius: 4px; overflow: hidden; }}
+  .krds-bar-fill {{
+    height: 100%; background: linear-gradient(90deg, {PRIMARY} 0%, #3B82F6 100%);
+    border-radius: 4px;
+  }}
+
+  /* ── 비교 컬럼 ── */
+  .krds-compare {{ display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }}
+  @media (max-width: 640px) {{ .krds-compare {{ grid-template-columns: 1fr; }} }}
+  .krds-compare-box {{
+    background: {GRAY_50}; border: 1px solid {GRAY_200};
+    border-radius: 6px; padding: 0.85rem 1rem;
+  }}
+  .krds-compare-box h4 {{ margin: 0 0 0.4rem; font-size: 0.8125rem; font-weight: 700; color: {PRIMARY}; }}
+  .krds-compare-box p {{ margin: 0; font-size: 0.875rem; color: {GRAY_600}; line-height: 1.6; }}
+
+  /* ── 검토의견 ── */
+  .krds-review-box {{
+    background: #FFFBF0; border: 1px solid #F6AD55;
+    border-left: 4px solid #DD6B20; border-radius: 6px;
+    padding: 0.85rem 1rem; margin-top: 0.85rem;
+    font-size: 0.875rem; color: #744210; line-height: 1.7;
+  }}
+  .krds-review-box strong {{ color: #C05621; display: block; margin-bottom: 0.3rem; font-size: 0.8125rem; }}
+
+  /* ── 분석중 ── */
   .krds-analyzing {{
     text-align: center; color: {GRAY_600}; font-size: 0.9375rem;
     margin: 0.75rem 0 0; padding: 0; background: none !important; border: none !important;
   }}
 
-  /* 푸터 */
+  /* ── 푸터 ── */
   .krds-footer {{
     background: {GRAY_900}; color: rgba(255,255,255,0.7); text-align: center;
-    padding: 1.25rem 1rem; font-size: 0.8125rem; margin-top: 2rem; line-height: 1.6;
+    padding: 1.25rem 1rem; font-size: 0.8125rem; margin-top: 3rem; line-height: 1.6;
   }}
   .krds-footer a {{ color: rgba(255,255,255,0.85); text-decoration: none; }}
 </style>
@@ -478,7 +533,13 @@ def _render_header_logo_html() -> str:
     return f'<div class="krds-logo-wrap"><span style="font-size:1rem;font-weight:700;color:{PRIMARY};">기획예산처</span></div>'
 
 
-def _render_site_chrome(*, breadcrumb_current: str, project_count: int) -> None:
+def _render_site_chrome(*, breadcrumb_current: str, project_count: int, is_results: bool) -> None:
+    back_btn = (
+        f'<a class="krds-back-btn" href="javascript:void(0);" '
+        f'onclick="window.parent.document.querySelector(\'[data-testid=stBaseButton-secondary]\').click();">'
+        f'← 이전으로 돌아가기</a>'
+        if is_results else ""
+    )
     st.markdown(
         f"""
 <div class="krds-gnb">
@@ -492,12 +553,15 @@ def _render_site_chrome(*, breadcrumb_current: str, project_count: int) -> None:
       <p>AI 기반 재정사업 중복 투자 사전 검토 도구</p>
     </div>
   </div>
-  <div class="krds-db-badge">기존 사업 DB · {project_count:,}건</div>
+  <div class="krds-db-badge">기존 사업: {project_count:,}건</div>
 </div>
 <div class="krds-breadcrumb">
-  <span>홈</span><span>›</span>
-  <span>재정사업 관리</span><span>›</span>
-  <strong>{_html_escape(breadcrumb_current)}</strong>
+  <div class="krds-breadcrumb-left">
+    <span>홈</span><span>›</span>
+    <span>재정사업 관리</span><span>›</span>
+    <strong>{_html_escape(breadcrumb_current)}</strong>
+  </div>
+  {back_btn}
 </div>
 """,
         unsafe_allow_html=True,
@@ -508,29 +572,11 @@ def _render_footer() -> None:
     st.markdown(
         """
 <div class="krds-footer">
-  ⓒ 2026 기획예산처 | 열린재정 정보공개시스템<br>
-  <a href="https://www.openfiscaldata.go.kr/" target="_blank">열린재정 바로가기</a>
+  ⓒ 2026 기획예산처 | 재정사업 유사·중복 탐지 시스템 &nbsp;·&nbsp;
 </div>
 """,
         unsafe_allow_html=True,
     )
-
-
-def _render_section_title(title: str) -> None:
-    st.markdown(
-        f"""
-<div class="krds-section-title">
-  <span class="bar"></span>
-  <span>{_html_escape(title)}</span>
-</div>
-""",
-        unsafe_allow_html=True,
-    )
-
-
-def _html_escape(text: str) -> str:
-    return (str(text).replace("&", "&amp;").replace("<", "&lt;")
-            .replace(">", "&gt;").replace('"', "&quot;"))
 
 
 # ── 결과 카드 ─────────────────────────────────────────────────────────────────
@@ -596,25 +642,41 @@ def _init_session() -> None:
 
 # ── 입력 페이지 ───────────────────────────────────────────────────────────────
 
-def _render_input_page(env_keys: dict[str, str], env_error: str | None, supabase: Client | None) -> None:
-    _render_section_title("신규 재정사업 정보 입력")
+def _render_input_page(env_keys, env_error, supabase, project_count: int = 0) -> None:
+
+    st.markdown(
+        f"""
+<div class="krds-input-hero">
+  <h2>신규 재정사업 유사·중복 검토</h2>
+  <p>사업 정보를 입력하면 AI가 기존 사업 {project_count:,}건과 비교하여 유사·중복 여부를 분석합니다.</p>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
 
     with st.form("new_project_form", clear_on_submit=False):
-        st.markdown('<label class="krds-label">사업명 <span class="req">*</span></label>', unsafe_allow_html=True)
-        project_name = st.text_input("사업명", placeholder="신규 사업명을 입력하세요", label_visibility="collapsed")
+        col1, col2 = st.columns(2)
 
-        st.markdown('<label class="krds-label">부처명</label>', unsafe_allow_html=True)
-        ministry = st.text_input("부처명", placeholder="예: 기획예산처", label_visibility="collapsed")
+        with col1:
+            st.markdown('<label class="krds-label">사업명 <span class="req">*</span></label>', unsafe_allow_html=True)
+            project_name = st.text_input("사업명", placeholder="신규 사업명을 입력하세요", label_visibility="collapsed")
 
-        st.markdown('<label class="krds-label">분야</label>', unsafe_allow_html=True)
-        field = st.selectbox("분야", FIELD_OPTIONS, index=0, label_visibility="collapsed")
+        with col2:
+            st.markdown('<label class="krds-label">부처명</label>', unsafe_allow_html=True)
+            ministry = st.text_input("부처명", placeholder="예: 기획예산처", label_visibility="collapsed")
+
+        col3, col4 = st.columns([1, 2])
+        with col3:
+            st.markdown('<label class="krds-label">분야</label>', unsafe_allow_html=True)
+            field = st.selectbox("분야", FIELD_OPTIONS, index=0, label_visibility="collapsed")
 
         st.markdown('<label class="krds-label">사업개요 <span class="req">*</span></label>', unsafe_allow_html=True)
         overview = st.text_area(
-            "사업개요", height=180,
+            "사업개요", height=160,
             placeholder="사업 목적, 주요 추진 내용, 기대 효과 등을 기술하세요.",
             label_visibility="collapsed",
         )
+
         submitted = st.form_submit_button(
             "유사·중복 분석 시작", type="primary",
             use_container_width=True, disabled=bool(env_error),
@@ -632,21 +694,21 @@ def _render_input_page(env_keys: dict[str, str], env_error: str | None, supabase
             "name": project_name.strip(), "ministry": ministry.strip(),
             "field": field.strip(), "overview": overview.strip(),
         }
-        st.markdown('<p class="krds-analyzing">유사·중복 사업을 분석 중입니다...</p>', unsafe_allow_html=True)
-        try:
-            result, vector_results = analyze_similar_projects(
-                env_keys["openai"], supabase,
-                st.session_state.last_form["name"], st.session_state.last_form["ministry"],
-                st.session_state.last_form["field"], st.session_state.last_form["overview"],
-            )
-            st.session_state.analysis_result = result
-            st.session_state.vector_results = vector_results
-            st.session_state.page = PAGE_RESULTS
-            st.session_state.show_copy_area = False
-            st.rerun()
-        except Exception as exc:  # noqa: BLE001
-            st.session_state.analysis_result = None
-            st.error(f"분석 중 오류가 발생했습니다: {exc}")
+        with st.spinner("유사 사업을 분석 중입니다..."):
+            try:
+                result, vector_results = analyze_similar_projects(
+                    env_keys["openai"], supabase,
+                    st.session_state.last_form["name"], st.session_state.last_form["ministry"],
+                    st.session_state.last_form["field"], st.session_state.last_form["overview"],
+                )
+                st.session_state.analysis_result = result
+                st.session_state.vector_results = vector_results
+                st.session_state.page = PAGE_RESULTS
+                st.session_state.show_copy_area = False
+                st.rerun()
+            except Exception as exc:  # noqa: BLE001
+                st.session_state.analysis_result = None
+                st.error(f"분석 중 오류가 발생했습니다: {exc}")
 
 
 # ── 결과 페이지 ───────────────────────────────────────────────────────────────
@@ -661,16 +723,11 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
         st.rerun()
         return
 
-    if st.button("← 이전으로 돌아가기", type="secondary", key="btn_go_back"):
-        st.session_state.page = PAGE_INPUT
-        st.session_state.show_copy_area = False
-        st.rerun()
-
+    # 분석 대상 요약
     st.markdown(
         f"""
-<div style="background:{WHITE};border:1px solid {GRAY_200};border-left:4px solid {PRIMARY};
-     border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
-  <p style="margin:0 0 0.65rem;font-size:0.9375rem;font-weight:700;color:{PRIMARY};">분석 대상 사업</p>
+<div class="krds-summary">
+  <p style="margin:0 0 0.75rem;font-size:0.9375rem;font-weight:700;color:{PRIMARY};">분석 대상 사업</p>
   <table style="width:100%;border-collapse:collapse;font-size:0.875rem;">
     <tr>
       <td style="width:80px;font-weight:600;color:{GRAY_600};padding:0.2rem 0.5rem 0.2rem 0;vertical-align:top;">사업명</td>
@@ -694,6 +751,7 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
         unsafe_allow_html=True,
     )
 
+    # 벡터 검색 결과 + 종합 의견
     opinion = result.get("overall_opinion") or result.get("summary")
     vector_rows_html = "".join(
         f"""
@@ -707,11 +765,10 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
 
     st.markdown(
         f"""
-<div style="background:{WHITE};border:1px solid {GRAY_200};border-radius:8px;
-     padding:1.25rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
+<div class="krds-result-section">
   <p class="krds-section-heading">벡터 검색 결과 (상위 {len(vector_results)}건)</p>
-  {vector_rows_html}
-  <p class="krds-section-heading" style="margin-top:1.25rem;">종합 의견</p>
+  {vector_rows_html if vector_rows_html else f'<p style="color:{GRAY_400};font-size:0.875rem;">검색 결과가 없습니다.</p>'}
+  <p class="krds-section-heading" style="margin-top:1.5rem;">종합 의견</p>
   <div class="krds-opinion-box">
     <span style="font-size:1.25rem;flex-shrink:0;"></span>
     <div>{_html_escape(opinion or "종합 의견이 없습니다.")}</div>
@@ -721,6 +778,7 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
         unsafe_allow_html=True,
     )
 
+    # 유사 사업 검토 결과
     similar: list[dict[str, Any]] = result.get("similar_projects") or []
     cards_html = "".join(
         _render_result_card_html(item, ref_map.get(str(item.get("id", "")), {}))
@@ -729,15 +787,15 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
 
     st.markdown(
         f"""
-<div style="background:{WHITE};border:1px solid {GRAY_200};border-radius:8px;
-     padding:1.25rem 1.5rem;margin-bottom:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.05);">
-  <p class="krds-section-heading">유사 사업 검토 결과 ({len(similar)}건)</p>
+<div class="krds-result-section">
+  <p class="krds-section-heading">유사·중복 사업 검토 결과 ({len(similar)}건)</p>
   {cards_html if cards_html else f'<p style="color:{GRAY_400};font-size:0.9rem;text-align:center;padding:1rem 0;">유사·중복 가능성이 높은 기존 사업이 발견되지 않았습니다.</p>'}
 </div>
 """,
         unsafe_allow_html=True,
     )
 
+    # 다운로드
     copy_text = build_review_copy_text(result, form, ref_map)
     col1, col2 = st.columns(2)
     with col1:
@@ -752,6 +810,12 @@ def _render_results_page(ref_map: dict[str, dict[str, Any]]) -> None:
     if st.session_state.show_copy_area:
         st.caption("아래 전체를 선택(Ctrl+A) 후 복사(Ctrl+C)하세요.")
         st.text_area("검토 결과 전문", value=copy_text, height=280, label_visibility="collapsed")
+
+    # 숨겨진 이전으로 버튼 (브레드크럼 버튼이 트리거)
+    if st.button("← 이전으로 돌아가기", type="secondary", key="btn_go_back"):
+        st.session_state.page = PAGE_INPUT
+        st.session_state.show_copy_area = False
+        st.rerun()
 
 
 # ── main ──────────────────────────────────────────────────────────────────────
@@ -776,18 +840,20 @@ def main() -> None:
     ref_map: dict[str, dict[str, Any]] = {str(r["id"]): r for r in vector_results}
 
     is_results = st.session_state.page == PAGE_RESULTS
+
     _render_site_chrome(
         breadcrumb_current="검토 결과" if is_results else "유사·중복 탐지",
         project_count=project_count,
+        is_results=is_results,
     )
 
-    with st.container(border=True, key="govt-content-panel"):
-        if env_error:
-            st.error(env_error)
-        if is_results:
-            _render_results_page(ref_map)
-        else:
-            _render_input_page(env_keys, env_error, supabase)
+    if env_error:
+        st.error(env_error)
+
+    if is_results:
+        _render_results_page(ref_map)
+    else:
+        _render_input_page(env_keys, env_error, supabase)
 
     _render_footer()
 
