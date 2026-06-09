@@ -24,12 +24,12 @@ flowchart TD
     B -->|사업 데이터 저장| C[(Supabase DB)]
     C -->|임베딩 생성| D[embed_projects.py]
     D -->|벡터 저장| C
+
     E[신규 사업 입력] -->|text-embedding-3-small| F[벡터 변환]
     F -->|코사인 유사도 검색| C
     C -->|유사 후보 10건| G[GPT-4o]
     G -->|유사·중복 분석 및 위험도 분류| H[결과 출력]
 ```
-
 
 ### 4. 실행 방법
 **uv 사용 시 (권장)**
