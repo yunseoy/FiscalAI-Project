@@ -648,7 +648,7 @@ def _render_input_page(env_keys, env_error, supabase, project_count: int = 0) ->
         f"""
 <div class="krds-input-hero">
   <h2>신규 재정사업 유사·중복 검토</h2>
-  <p>사업 정보를 입력하면 AI가 기존 사업 {project_count:,}건과 비교하여 유사·중복 여부를 분석합니다.</p>
+  <p>사업 정보를 입력하면 AI가 기존 사업과 비교하여 유사·중복 여부를 분석합니다.</p>
 </div>
 """,
         unsafe_allow_html=True,
