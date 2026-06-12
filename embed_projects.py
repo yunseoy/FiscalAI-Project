@@ -7,6 +7,7 @@
     OPENAI_API_KEY
     SUPABASE_URL, SUPABASE_ANON_KEY
     EMBED_BATCH_SIZE  — 한 번에 임베딩할 건수, 기본 100
+    EMBED_REBUILD       — 1/true/yes 이면 전체 재임베딩 (형식 변경 후 1회 실행)
 """
 
 from __future__ import annotations
@@ -18,10 +19,11 @@ from pathlib import Path
 from typing import Any
 
 from dotenv import load_dotenv
+from embedding_text import make_embedding_text_from_row
 from openai import OpenAI
 from supabase import Client, create_client
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parent
 ENV_PATH = REPO_ROOT / ".env"
 load_dotenv(dotenv_path=ENV_PATH)
 
@@ -42,6 +44,7 @@ def load_config() -> dict[str, Any]:
         "supabase_url": os.getenv("SUPABASE_URL", "").strip(),
         "supabase_key": os.getenv("SUPABASE_ANON_KEY", "").strip(),
         "batch_size": batch_size,
+        "rebuild": os.getenv("EMBED_REBUILD", "").strip().lower() in {"1", "true", "yes"},
     }
 
 
@@ -59,37 +62,23 @@ def validate_config(cfg: dict[str, Any]) -> None:
         )
 
 
-def make_embedding_text(row: dict[str, Any]) -> str:
-    """임베딩용 텍스트 조합 (분류명 + 사업명, 소관명 제외)."""
-    parts = [
-        row.get("fld_nm") or "",    # 분야명
-        row.get("sect_nm") or "",   # 부문명
-        row.get("pgm_nm") or "",    # 프로그램명
-        row.get("actv_nm") or "",   # 단위사업명
-        row.get("sactv_nm") or "",  # 세부사업명
-        row.get("bz_cls_nm") or "", # 사업분류명
-        row.get("project_name") or "", # 사업명
-    ]
-    return " ".join(p for p in parts if p.strip())
-
-
-def fetch_unembedded_projects(client: Client) -> list[dict[str, Any]]:
-    """embedding이 NULL인 프로젝트 전체 조회 (페이지네이션)."""
+def fetch_projects(client: Client, *, rebuild: bool = False) -> list[dict[str, Any]]:
+    """임베딩 대상 프로젝트 조회 (페이지네이션). rebuild=True면 전체 재임베딩."""
     all_rows = []
     offset = 0
     batch = 1000
 
     while True:
-        response = (
+        query = (
             client.table("projects")
             .select(
-                "id, project_name, ministry, "
+                "id, project_name, ministry, category, overview, "
                 "fld_nm, sect_nm, pgm_nm, actv_nm, sactv_nm, bz_cls_nm"
             )
-            .is_("embedding", "null")
-            .range(offset, offset + batch - 1)
-            .execute()
         )
+        if not rebuild:
+            query = query.is_("embedding", "null")
+        response = query.range(offset, offset + batch - 1).execute()
         rows = response.data or []
         all_rows.extend(rows)
         print(f"  조회 중: {len(all_rows)}건...")
@@ -130,7 +119,9 @@ def main() -> None:
     openai_client = OpenAI(api_key=cfg["openai_key"])
 
     print("임베딩 대상 프로젝트 조회 중...")
-    projects = fetch_unembedded_projects(supabase)
+    if cfg["rebuild"]:
+        print("  (EMBED_REBUILD=1 — 전체 재임베딩 모드)")
+    projects = fetch_projects(supabase, rebuild=cfg["rebuild"])
 
     if not projects:
         print("임베딩할 프로젝트가 없습니다. (이미 모두 완료됐거나 데이터 없음)")
@@ -145,7 +136,7 @@ def main() -> None:
         batch = projects[i: i + batch_size]
 
         ids = [row["id"] for row in batch]
-        texts = [make_embedding_text(row) for row in batch]
+        texts = [make_embedding_text_from_row(row) for row in batch]
 
         # 빈 텍스트 체크
         for j, (pid, text) in enumerate(zip(ids, texts)):

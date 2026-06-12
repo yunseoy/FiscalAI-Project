@@ -31,7 +31,7 @@ from typing import Any
 from dotenv import load_dotenv
 from supabase import Client, create_client
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parent
 ENV_PATH = REPO_ROOT / ".env"
 load_dotenv(dotenv_path=ENV_PATH)
 
